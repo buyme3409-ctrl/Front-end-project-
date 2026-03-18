@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import BookList from "./BookList";
-import TargetTracker from "./TargetTracker";
+import BookList from "./components/BookList";
+import TargetTracker from "./components/TargetTracker";
+import BookForm from "./components/BookForm";
+import Scheduler from "./components/Scheduler";
 
 function ReadingApp() {
     // Shared state: list of books
@@ -10,8 +12,13 @@ function ReadingApp() {
         { id: 3, title: "Sapiens", author: "Yuval Noah Harari", read: false },
     ]);
 
+    const addBook = (book) => {
+        setBooks([...books, { ...book, id: Date.now(), read: false }]);
+    };
+
+
     // Shared state: reading target
-    const [target, setTarget] = useState(5);
+    const [target, setTarget] = useState(10);
 
     // Function to toggle read status
     const toggleRead = (id) => {
@@ -20,7 +27,11 @@ function ReadingApp() {
                 book.id === id ? { ...book, read: !book.read } : book
             )
         );
+
+
     };
+
+
 
     //  Function to delete a book
     const deleteBook = (id) => {
@@ -31,6 +42,11 @@ function ReadingApp() {
     return (
         <div className="container mt-4">
             <TargetTracker target={target} setTarget={setTarget} books={books} />
+
+            <BookForm addBook={addBook} />
+
+            <Scheduler books={books} setBooks={setBooks} />
+
             <BookList books={books} toggleRead={toggleRead} deleteBook={deleteBook} />
         </div>
     );

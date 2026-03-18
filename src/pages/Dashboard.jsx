@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
-import BookForm from "../components/BookForm";
 import BookList from "../components/BookList";
-import Scheduler from "../components/Scheduler";
 import TargetTracker from "../components/TargetTracker";
 import { Button } from "react-bootstrap";
 import { AuthContext } from "../context/AuthContext";
+import { ReadingApp } from "../ReadingApp";
+
 
 function Dashboard() {
     const [books, setBooks] = useState([]);
@@ -12,9 +12,6 @@ function Dashboard() {
 
     const { logout } = useContext(AuthContext);
 
-    const addBook = (book) => {
-        setBooks([...books, { ...book, id: Date.now(), read: false }]);
-    };
 
     const toggleRead = (id) => {
         setBooks(
@@ -42,9 +39,6 @@ function Dashboard() {
                 books={books}
             />
 
-            <BookForm addBook={addBook} />
-
-            <Scheduler books={books} setBooks={setBooks} />
 
             <BookList
                 books={books}
